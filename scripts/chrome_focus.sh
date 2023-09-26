@@ -10,8 +10,14 @@ if [ "$active_win_id" == "0" ]; then
     active_win_id=""
 fi
 
-id_win_chrome=`wmctrl -lx | grep $chrome_app_name| grep " 1 " | awk '{print $1}'`
-(wmctrl -ia $id_win_chrome)
-exit 0
+if [[ "$workspace_number" == "1" ]]; then
+    id_win_chrome=`wmctrl -lx | grep $chrome_app_name| grep " $workspace_number " | awk '{print $1}'`
+    (wmctrl -ia $id_win_chrome)
+    exit 0  
+else
+    id_win_chrome=`wmctrl -lx | grep $chrome_app_name| grep " 1 " | awk '{print $1}'`
+    (wmctrl -ia $id_win_chrome)
+    exit 0  
+fi
 
 exit 0

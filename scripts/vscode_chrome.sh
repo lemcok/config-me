@@ -29,9 +29,23 @@ if [[ "$vscode_win_list" == *"$active_win_id"* ]]; then
   exit 0
 
 elif [[ "$chrome_win_list" == *"$active_win_id"* && "$workspace_number" == "1"  ]]; then
-  id_win_vscode=`wmctrl -lx | grep $vscode_app_name | grep " $workspace_number " | awk '{print $1}'`
-  (wmctrl -ia $id_win_vscode)
-  exit 0
+  # Get the list of all the windows which do
+    win_list=$(wmctrl -lx | grep $vscode_app_name | awk '{print $1}')
+
+    IDs=$(xprop -root|grep "^_NET_CLIENT_LIST_STACKING" | tr "," " ")
+    IDs=(${IDs##*#})
+
+   # For each window in focus order
+    for (( idx=${#IDs[@]}-1 ; idx>=0 ; idx-- )) ; do
+        for i in $win_list; do
+
+           # If the window matches the first argument, focus on it
+            if [ $((i)) = $((IDs[idx])) ]; then
+                wmctrl -ia $i
+                exit 0
+            fi
+        done
+    done
 
 elif [[ "$chrome_win_list" == *"$active_win_id"*  ]]; then
   if [[ "$workspace_number" == "0" ]]; then
@@ -39,13 +53,41 @@ elif [[ "$chrome_win_list" == *"$active_win_id"*  ]]; then
   elif [[ "$workspace_number" == "1" ]]; then
     workspace_number="0"
   fi
-  id_win_vscode=`wmctrl -lx | grep $vscode_app_name | grep " $workspace_number " | awk '{print $1}'`
-  (wmctrl -ia $id_win_vscode)
-  exit 0
+  # Get the list of all the windows which do
+    win_list=$(wmctrl -lx | grep $vscode_app_name | awk '{print $1}')
+
+    IDs=$(xprop -root|grep "^_NET_CLIENT_LIST_STACKING" | tr "," " ")
+    IDs=(${IDs##*#})
+
+   # For each window in focus order
+    for (( idx=${#IDs[@]}-1 ; idx>=0 ; idx-- )) ; do
+        for i in $win_list; do
+
+           # If the window matches the first argument, focus on it
+            if [ $((i)) = $((IDs[idx])) ]; then
+                wmctrl -ia $i
+                exit 0
+            fi
+        done
+    done
 else 
-    id_win_vscode=`wmctrl -lx | grep $vscode_app_name | grep " 1 " | awk '{print $1}'`
-    (wmctrl -ia $id_win_vscode)
-    exit 0
+    ##Get the list of all the windows which do
+    win_list=$(wmctrl -lx | grep $vscode_app_name | awk '{print $1}')
+
+    IDs=$(xprop -root|grep "^_NET_CLIENT_LIST_STACKING" | tr "," " ")
+    IDs=(${IDs##*#})
+
+   # For each window in focus order
+    for (( idx=${#IDs[@]}-1 ; idx>=0 ; idx-- )) ; do
+        for i in $win_list; do
+
+           # If the window matches the first argument, focus on it
+            if [ $((i)) = $((IDs[idx])) ]; then
+                wmctrl -ia $i
+                exit 0
+            fi
+        done
+    done
 fi
 
 exit 0
