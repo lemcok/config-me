@@ -124,6 +124,14 @@ alias run="cargo run";
 ## Aliases tree command
 alias tre='tree -I node_modules'
 
+## gh aliases
+alias ghcp='(){
+  if [ -n "$1" ]
+  then
+    gh repo create $1 --private --source=. --remote=upstream --push
+  fi
+}'
+
 
 ## PATHs
 #export PATH=$PATH:/home/ric/.apps/node/bin
