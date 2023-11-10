@@ -128,7 +128,7 @@ alias tre='tree -I node_modules'
 alias ghcp='(){
   if [ -n "$1" ]
   then
-    gh repo create $1 --private --source=. --remote=upstream --push
+    gh repo create $1 --private --source=. --remote=origin --push
   fi
 }'
 
