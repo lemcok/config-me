@@ -132,6 +132,12 @@ alias ghcp='(){
   fi
 }'
 
+alias ghc='(){
+  if [ -n "$1" ]
+  then
+    gh repo create $1 --public --source=. --remote=origin --push
+  fi
+}'
 
 ## PATHs
 #export PATH=$PATH:/home/ric/.apps/node/bin
