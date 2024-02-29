@@ -139,6 +139,21 @@ alias ghc='(){
   fi
 }'
 
+## yt-dlp
+alias ytmp3='(){
+  if [ -n "$1" ]
+  then
+    yt-dlp --extract-audio --audio-format mp3 --no-playlist $1
+  fi
+}'
+alias yt='(){
+  if [ -n "$1" ]
+  then
+    yt-dlp --no-playlist $1
+  fi
+}'
+
+
 ## PATHs
 #export PATH=$PATH:/home/ric/.apps/node/bin
 export PATH=$PATH:/home/ric/.deno/bin
